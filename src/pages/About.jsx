@@ -189,23 +189,13 @@ function About() {
         </div>
         <div className="pet-grid">
           <div className="pet-card">
-            <div className="pet-emoji">🐕</div>
+            <img src="/daisy_photo.jpg" alt="Daisy the dog" className="pet-photo" />
             <h3>Daisy</h3>
             <p className="pet-type">Dog</p>
           </div>
           <div className="pet-card">
-            <div className="pet-emoji">🐱</div>
+            <img src="/barsik_photo.jpg" alt="Barsik the cat" className="pet-photo" />
             <h3>Barsik</h3>
-            <p className="pet-type">Cat</p>
-          </div>
-          <div className="pet-card">
-            <div className="pet-emoji">🐕</div>
-            <h3>Macya</h3>
-            <p className="pet-type">Dog</p>
-          </div>
-          <div className="pet-card">
-            <div className="pet-emoji">🐱</div>
-            <h3>Rijik</h3>
             <p className="pet-type">Cat</p>
           </div>
         </div>

@@ -533,18 +533,18 @@
   background: rgba(10, 12, 28, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.08);
   text-align: center;
-  transition: transform 200ms ease, border-color 200ms ease;
 }
 
-.pet-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(127, 109, 255, 0.3);
-}
-
-.pet-emoji {
-  font-size: 3rem;
+.pet-photo {
+  width: 100%;
+  max-width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 1rem;
   margin-bottom: 1rem;
-  line-height: 1;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .pet-card h3 {
