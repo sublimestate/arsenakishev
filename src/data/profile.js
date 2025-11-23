@@ -127,3 +127,38 @@ export const personalNotes = [
   'Balancing backend rigor with real-world product velocity is where I thrive.',
 ]
 
+export const articles = [
+  {
+    id: 'an-experiment-in-writing',
+    title: 'An Experiment in Writing',
+    date: '2023-09-02',
+    summary: 'A reflection on the growing desire to express thoughts through writing, embracing an experimental approach that will happen at its own pace.',
+    content: `I've always loved reading and listening to the thoughts of others. But there's always been a desire to express myself, too. This desire has been growing for years, even though it started small.
+
+This is an experiment. I hope it results in something good. There will be months when I don't write a single word. There will be days when I publish multiple articles.
+
+I think this experience will be similar to how I read books and publications. It will happen at its own pace and at the right time.`,
+  },
+  {
+    id: 'parallels-home-building-software-engineering',
+    title: 'Parallels Between Home Building and Software Engineering',
+    date: '2023-11-02',
+    summary: 'A personal reflection on the surprising parallels between home renovation and software engineering, comparing roofers to UI engineers, carpenters to infrastructure engineers, and concluding that commanding server clusters is easier than coordinating contractors.',
+    content: `As I embarked on this journey to renovate my home, there were constant threads that connected me back to software engineering. I couldn't help from seeing the parallels that home building has with building a software product.
+
+Here are some examples of what I have noticed
+
+Roofers are similar to UI engineers or Mobile engineers. They have the responsibility of making the home presentable and functional.
+
+Carpenters/Framers are similar to infrastructure/server engineers. They set up the skeleton of the home. Nothing can exist without them. Their errors will cause others to fail.
+
+Plumbers, electricians, drywallers, and painters are product engineers. I think this one is self-explanatory.
+
+Insulation installers remind me of security engineers. They keep the bad weather conditions out. Roofers and siding installers are similar to this.
+
+People who pour your foundation are Operating Systems/Kernel developers. Thankfully, in the software world, we don't mess with the operating system as often as home builders do.
+
+Anyways. I think I will stick with software for the foreseeable future. Commanding a server cluster is easier than coordinating contractors.`,
+  },
+]
+

@@ -2,13 +2,15 @@ import { NavLink, Routes, Route, Link } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
 import Experience from './pages/Experience'
-import Surprise from './pages/Surprise'
+import Writing from './pages/Writing'
+import Article from './pages/Article'
 import './App.css'
 
 const navLinks = [
   { path: '/', label: 'Home' },
   { path: '/about', label: 'About' },
   { path: '/experience', label: 'Experience' },
+  { path: '/writing', label: 'Writing' },
 ]
 
 function App() {
@@ -40,10 +42,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/experience" element={<Experience />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/experience" element={<Experience />} />
-          <Route path="/surprise" element={<Surprise />} />
+          <Route path="/writing" element={<Writing />} />
+          <Route path="/writing/:id" element={<Article />} />
         </Routes>
       </main>
 
