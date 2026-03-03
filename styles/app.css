@@ -909,4 +909,9 @@
   .about-details {
     grid-template-columns: 1fr;
   }
+
+  .article-card,
+  .experience-card {
+    backdrop-filter: none;
+  }
 }
