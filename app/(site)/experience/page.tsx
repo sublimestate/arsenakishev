@@ -1,6 +1,6 @@
-import { experiences, earlierRoles, skillBuckets } from '../data/profile'
+import { experiences, earlierRoles, skillBuckets } from '@/data/profile'
 
-function Experience() {
+export default function Experience() {
   return (
     <div className="page experience-page">
       <section className="section">
@@ -92,6 +92,3 @@ function Experience() {
     </div>
   )
 }
-
-export default Experience
-

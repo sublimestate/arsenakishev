@@ -1,30 +1,19 @@
-import { useParams, Link } from 'react-router-dom'
-import { articles } from '../data/profile'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import { articles } from '@/data/profile'
 
-function Article() {
-  const { id } = useParams()
+export default async function Article({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const article = articles.find((a) => a.id === id)
 
   if (!article) {
-    return (
-      <div className="page article-page">
-        <section className="section">
-          <div className="section-header">
-            <h1>Article not found</h1>
-            <p>The article you're looking for doesn't exist.</p>
-            <Link to="/writing" className="btn ghost">
-              Back to Writing
-            </Link>
-          </div>
-        </section>
-      </div>
-    )
+    notFound()
   }
 
   return (
     <div className="page article-page">
       <section className="section">
-        <Link to="/writing" className="back-link">
+        <Link href="/writing" className="back-link">
           ← Back to Writing
         </Link>
         <article className="article-full">
@@ -52,6 +41,3 @@ function Article() {
     </div>
   )
 }
-
-export default Article
-

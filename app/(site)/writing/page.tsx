@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom'
-import { articles } from '../data/profile'
+import Link from 'next/link'
+import { articles } from '@/data/profile'
 
-function Writing() {
-  // Sort articles by date in reverse chronological order (newest first)
-  const sortedArticles = [...articles].sort((a, b) => new Date(b.date) - new Date(a.date))
+export default function Writing() {
+  const sortedArticles = [...articles].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
   return (
     <div className="page writing-page">
@@ -17,7 +16,7 @@ function Writing() {
         </div>
         <div className="article-list">
           {sortedArticles.map((article) => (
-            <Link key={article.id} to={`/writing/${article.id}`} className="article-card-link">
+            <Link key={article.id} href={`/writing/${article.id}`} className="article-card-link">
               <article className="article-card">
                 <div className="article-header">
                   <h3 className="article-title">{article.title}</h3>
@@ -37,6 +36,3 @@ function Writing() {
     </div>
   )
 }
-
-export default Writing
-

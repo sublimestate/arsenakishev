@@ -1,6 +1,6 @@
-import { quickFacts, skillBuckets, contactLinks, summary } from '../data/profile'
+import { quickFacts, skillBuckets, contactLinks, summary } from '@/data/profile'
 
-function Home() {
+export default function Home() {
   return (
     <div className="page home-page">
       <header className="hero" id="home">
@@ -58,6 +58,3 @@ function Home() {
     </div>
   )
 }
-
-export default Home
-

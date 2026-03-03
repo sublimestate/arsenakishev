@@ -1,4 +1,18 @@
-# Logs
+# next.js
+.next/
+out/
+
+# dependencies
+node_modules
+
+# local env files (contains secrets/keys)
+.env*.local
+
+# typescript (auto-generated)
+*.tsbuildinfo
+next-env.d.ts
+
+# debug logs
 logs
 *.log
 npm-debug.log*
@@ -7,12 +21,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
+# editor
 .vscode/*
 !.vscode/extensions.json
 .idea
