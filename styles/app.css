@@ -5,7 +5,7 @@
   background: radial-gradient(circle at top, rgba(108, 99, 255, 0.25), transparent 45%),
     radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.25), transparent 35%),
     var(--surface);
-  overflow: hidden;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -885,7 +885,12 @@
 
 @media (max-width: 720px) {
   .site {
-    padding: 3rem 1.5rem 2rem;
+    padding: 3rem 1.5rem 2.5rem;
+  }
+
+  .site-nav {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .experience-top {
@@ -901,12 +906,7 @@
     padding-left: 0.9rem;
   }
 
-  .site {
-    padding: 3rem 1.5rem 2.5rem;
-  }
-
-  .site-nav {
-    flex-direction: column;
-    align-items: flex-start;
+  .about-details {
+    grid-template-columns: 1fr;
   }
 }
