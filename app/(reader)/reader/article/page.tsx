@@ -11,7 +11,7 @@ interface Article {
   content: string | null
   excerpt: string | null
   siteName: string | null
-  source: 'direct' | 'google-referrer' | 'googlebot' | 'wayback'
+  source: 'direct' | 'google-referrer' | 'googlebot' | 'wayback' | 'archive.ph'
 }
 
 function ArticleContent() {
@@ -110,6 +110,9 @@ function ArticleContent() {
           )}
           {article.source === 'direct' && (
             <span className="reader-badge reader-badge--direct">direct</span>
+          )}
+          {article.source === 'archive.ph' && (
+            <span className="reader-badge reader-badge--wayback">via archive.ph</span>
           )}
         </div>
 

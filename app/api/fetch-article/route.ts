@@ -94,13 +94,38 @@ async function fetchWayback(url: string): Promise<{ html: string; finalUrl: stri
   }
 }
 
+async function fetchArchivePh(url: string): Promise<{ html: string; finalUrl: string } | null> {
+  try {
+    const res = await fetch(`https://archive.ph/newest/${encodeURIComponent(url)}`, {
+      headers: { "User-Agent": USER_AGENT },
+      redirect: "follow",
+      signal: AbortSignal.timeout(10000),
+    });
+    if (!res.ok) return null;
+    const html = await res.text();
+    // archive.ph returns its own homepage when no snapshot exists
+    if (res.url === "https://archive.ph/" || res.url === "https://archive.is/") return null;
+    return { html, finalUrl: res.url };
+  } catch {
+    return null;
+  }
+}
+
+const PAYWALL_TITLE_RE = /subscribe to (read|continue|access)|sign in to read|create an account|register (to|for) (read|access)|access denied/i
+
+function isPaywallPage(html: string): boolean {
+  const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/i)
+  const title = titleMatch?.[1] ?? ""
+  return PAYWALL_TITLE_RE.test(title)
+}
+
 function extractArticle(html: string, url: string) {
   const dom = new JSDOM(html, { url });
   const reader = new Readability(dom.window.document);
   return reader.parse();
 }
 
-type Source = "direct" | "google-referrer" | "googlebot" | "wayback";
+type Source = "direct" | "google-referrer" | "googlebot" | "wayback" | "archive.ph";
 
 export async function POST(req: NextRequest) {
   // Rate limit by IP
@@ -135,11 +160,12 @@ export async function POST(req: NextRequest) {
   }
 
   // Run all fetch strategies in parallel — stays well within Vercel's timeout
-  const [directRes, googleRefRes, googlebotRes, waybackRes] = await Promise.all([
+  const [directRes, googleRefRes, googlebotRes, waybackRes, archivePhRes] = await Promise.all([
     fetchWithHeaders(parsedUrl.href, {}),
     fetchWithHeaders(parsedUrl.href, { "Referer": "https://www.google.com/" }),
     fetchGooglebot(parsedUrl.href),
     fetchWayback(parsedUrl.href),
+    fetchArchivePh(parsedUrl.href),
   ]);
 
   const candidates: Array<{ fetched: { html: string; finalUrl: string }; source: Source }> = [
@@ -147,11 +173,14 @@ export async function POST(req: NextRequest) {
     { fetched: googleRefRes!, source: "google-referrer" },
     { fetched: googlebotRes!, source: "googlebot" },
     { fetched: waybackRes!, source: "wayback" },
+    { fetched: archivePhRes!, source: "archive.ph" },
   ].filter((c) => c.fetched != null) as Array<{ fetched: { html: string; finalUrl: string }; source: Source }>;
 
   let best: { article: ReturnType<Readability["parse"]>; source: Source; wc: number } | null = null;
+  let allPaywalled = candidates.length > 0;
 
   for (const { fetched, source } of candidates) {
+    if (!isPaywallPage(fetched.html)) allPaywalled = false;
     const article = extractArticle(fetched.html, fetched.finalUrl);
     const wc = article?.textContent ? wordCount(article.textContent) : 0;
     if (article && wc > (best?.wc ?? 0)) {
@@ -167,10 +196,10 @@ export async function POST(req: NextRequest) {
   }
 
   if (best.wc < 200) {
-    return NextResponse.json(
-      { error: "Article content is too short or could not be extracted properly." },
-      { status: 422 }
-    );
+    const error = allPaywalled
+      ? "This article is behind a paywall and no archived version was found."
+      : "Article content is too short or could not be extracted properly.";
+    return NextResponse.json({ error }, { status: 422 });
   }
 
   return NextResponse.json({
