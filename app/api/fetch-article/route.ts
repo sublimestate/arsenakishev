@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { Readability } from "@mozilla/readability";
 import { JSDOM } from "jsdom";
 
+export const maxDuration = 30;
+
 const USER_AGENT =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 
@@ -20,7 +22,7 @@ async function fetchWithHeaders(
     const res = await fetch(url, {
       headers: { "User-Agent": USER_AGENT, ...extraHeaders },
       redirect: "follow",
-      signal: AbortSignal.timeout(10000),
+      signal: AbortSignal.timeout(8000),
     });
     if (!res.ok) return null;
     const html = await res.text();
@@ -38,7 +40,7 @@ async function fetchGooglebot(url: string): Promise<{ html: string; finalUrl: st
         "Referer": "https://www.google.com/",
       },
       redirect: "follow",
-      signal: AbortSignal.timeout(10000),
+      signal: AbortSignal.timeout(8000),
     });
     if (!res.ok) return null;
     const html = await res.text();
@@ -52,7 +54,7 @@ async function fetchWayback(url: string): Promise<{ html: string; finalUrl: stri
   try {
     const availRes = await fetch(
       `https://archive.org/wayback/available?url=${encodeURIComponent(url)}`,
-      { signal: AbortSignal.timeout(8000) }
+      { signal: AbortSignal.timeout(6000) }
     );
     if (!availRes.ok) return null;
     const data = await availRes.json();
@@ -62,7 +64,7 @@ async function fetchWayback(url: string): Promise<{ html: string; finalUrl: stri
     const snapRes = await fetch(snapshotUrl, {
       headers: { "User-Agent": USER_AGENT },
       redirect: "follow",
-      signal: AbortSignal.timeout(10000),
+      signal: AbortSignal.timeout(8000),
     });
     if (!snapRes.ok) return null;
     const html = await snapRes.text();
@@ -77,6 +79,8 @@ function extractArticle(html: string, url: string) {
   const reader = new Readability(dom.window.document);
   return reader.parse();
 }
+
+type Source = "direct" | "google-referrer" | "googlebot" | "wayback";
 
 export async function POST(req: NextRequest) {
   let body: { url?: string };
@@ -100,68 +104,39 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid URL" }, { status: 400 });
   }
 
-  let source: "direct" | "google-referrer" | "googlebot" | "wayback" = "direct";
-  let article = null;
-  let bestWordCount = 0;
+  // Run all fetch strategies in parallel — stays well within Vercel's timeout
+  const [directRes, googleRefRes, googlebotRes, waybackRes] = await Promise.all([
+    fetchWithHeaders(parsedUrl.href, {}),
+    fetchWithHeaders(parsedUrl.href, { "Referer": "https://www.google.com/" }),
+    fetchGooglebot(parsedUrl.href),
+    fetchWayback(parsedUrl.href),
+  ]);
 
-  // 1. Try direct fetch
-  const direct = await fetchWithHeaders(parsedUrl.href, {});
-  if (direct) {
-    article = extractArticle(direct.html, direct.finalUrl);
-    bestWordCount = article?.textContent ? wordCount(article.textContent) : 0;
-  }
+  const candidates: Array<{ fetched: { html: string; finalUrl: string }; source: Source }> = [
+    { fetched: directRes!, source: "direct" },
+    { fetched: googleRefRes!, source: "google-referrer" },
+    { fetched: googlebotRes!, source: "googlebot" },
+    { fetched: waybackRes!, source: "wayback" },
+  ].filter((c) => c.fetched != null) as Array<{ fetched: { html: string; finalUrl: string }; source: Source }>;
 
-  // 2. Try with Google referrer ("first click free") if content is thin
-  if (bestWordCount < 200) {
-    const googleRef = await fetchWithHeaders(parsedUrl.href, { "Referer": "https://www.google.com/" });
-    if (googleRef) {
-      const a = extractArticle(googleRef.html, googleRef.finalUrl);
-      const wc = a?.textContent ? wordCount(a.textContent) : 0;
-      if (a && wc > bestWordCount) {
-        article = a;
-        source = "google-referrer";
-        bestWordCount = wc;
-      }
+  let best: { article: ReturnType<Readability["parse"]>; source: Source; wc: number } | null = null;
+
+  for (const { fetched, source } of candidates) {
+    const article = extractArticle(fetched.html, fetched.finalUrl);
+    const wc = article?.textContent ? wordCount(article.textContent) : 0;
+    if (article && wc > (best?.wc ?? 0)) {
+      best = { article, source, wc };
     }
   }
 
-  // 3. Try as Googlebot (publishers allow crawlers to index full content)
-  if (bestWordCount < 200) {
-    const googlebot = await fetchGooglebot(parsedUrl.href);
-    if (googlebot) {
-      const a = extractArticle(googlebot.html, googlebot.finalUrl);
-      const wc = a?.textContent ? wordCount(a.textContent) : 0;
-      if (a && wc > bestWordCount) {
-        article = a;
-        source = "googlebot";
-        bestWordCount = wc;
-      }
-    }
-  }
-
-  // 4. Fallback to Wayback Machine if still thin
-  if (bestWordCount < 200) {
-    const wayback = await fetchWayback(parsedUrl.href);
-    if (wayback) {
-      const a = extractArticle(wayback.html, wayback.finalUrl);
-      const wc = a?.textContent ? wordCount(a.textContent) : 0;
-      if (a && wc > bestWordCount) {
-        article = a;
-        source = "wayback";
-        bestWordCount = wc;
-      }
-    }
-  }
-
-  if (!article) {
+  if (!best || !best.article) {
     return NextResponse.json(
       { error: "Could not extract article content from the provided URL." },
       { status: 422 }
     );
   }
 
-  const wc = wordCount(article.textContent ?? "");
-  if (wc < 200) {
+  if (best.wc < 200) {
     return NextResponse.json(
       { error: "Article content is too short or could not be extracted properly." },
       { status: 422 }
@@ -169,11 +144,11 @@ export async function POST(req: NextRequest) {
   }
 
   return NextResponse.json({
-    title: article.title ?? null,
-    byline: article.byline ?? null,
-    content: article.content ?? null,
-    excerpt: article.excerpt ?? null,
-    siteName: article.siteName ?? null,
-    source,
+    title: best.article.title ?? null,
+    byline: best.article.byline ?? null,
+    content: best.article.content ?? null,
+    excerpt: best.article.excerpt ?? null,
+    siteName: best.article.siteName ?? null,
+    source: best.source,
   });
 }
