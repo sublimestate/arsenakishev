@@ -112,7 +112,7 @@ export const contactLinks = [
     value: 'linkedin.com/in/arsen-akishev',
     href: 'https://www.linkedin.com/in/arsen-akishev/',
   },
-  { label: 'GitHub', value: 'github.com/0xArsen', href: 'https://github.com/0xArsen' },
+  { label: 'GitHub', value: 'github.com/sublimestate', href: 'https://github.com/sublimestate' },
 ]
 
 export const summary =
