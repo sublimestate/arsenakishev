@@ -67,6 +67,26 @@ export default function About() {
           </div>
         </div>
       </section>
+      <section className="section gym-stats">
+        <div className="section-header">
+          <p className="eyebrow">Gym Stats</p>
+          <h2>Lifting numbers.</h2>
+        </div>
+        <div className="gym-grid">
+          <div className="gym-card">
+            <span className="gym-lift">Bench Press</span>
+            <span className="gym-weight">135 lbs</span>
+          </div>
+          <div className="gym-card">
+            <span className="gym-lift">Deadlift</span>
+            <span className="gym-weight">195 lbs</span>
+          </div>
+          <div className="gym-card">
+            <span className="gym-lift">Squat</span>
+            <span className="gym-weight gym-weight--na">I don&apos;t squat</span>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
