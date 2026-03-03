@@ -3,6 +3,7 @@
 import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import DOMPurify from 'dompurify'
 
 interface Article {
   title: string | null
@@ -129,7 +130,7 @@ function ArticleContent() {
         {article.content && (
           <div
             className="reader-prose"
-            dangerouslySetInnerHTML={{ __html: article.content }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(article.content) }}
           />
         )}
 

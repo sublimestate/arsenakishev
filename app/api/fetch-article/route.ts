@@ -4,6 +4,26 @@ import { JSDOM } from "jsdom";
 
 export const maxDuration = 30;
 
+// ── Rate limiting ─────────────────────────────────────────────────────────────
+const WINDOW_MS = 60_000
+const MAX_REQUESTS = 10
+const rateLimitMap = new Map<string, number[]>()
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now()
+  const hits = (rateLimitMap.get(ip) ?? []).filter((t) => now - t < WINDOW_MS)
+  if (hits.length >= MAX_REQUESTS) return true
+  rateLimitMap.set(ip, [...hits, now])
+  return false
+}
+
+// ── SSRF protection ───────────────────────────────────────────────────────────
+const PRIVATE_HOST_RE = /^(localhost|127\.\d+\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+|192\.168\.\d+\.\d+|169\.254\.\d+\.\d+|0\.0\.0\.0|::1|fc[0-9a-f]{2}:|fd[0-9a-f]{2}:)/i
+
+function isPrivateHost(hostname: string): boolean {
+  return PRIVATE_HOST_RE.test(hostname)
+}
+
 const USER_AGENT =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 
@@ -83,6 +103,12 @@ function extractArticle(html: string, url: string) {
 type Source = "direct" | "google-referrer" | "googlebot" | "wayback";
 
 export async function POST(req: NextRequest) {
+  // Rate limit by IP
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? req.headers.get("x-real-ip") ?? "unknown"
+  if (isRateLimited(ip)) {
+    return NextResponse.json({ error: "Too many requests. Please wait a moment." }, { status: 429 })
+  }
+
   let body: { url?: string };
   try {
     body = await req.json();
@@ -95,12 +121,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing url field" }, { status: 400 });
   }
 
-  // Validate URL
+  // Validate URL and block private/internal hosts (SSRF protection)
   let parsedUrl: URL;
   try {
     parsedUrl = new URL(url);
     if (!["http:", "https:"].includes(parsedUrl.protocol)) throw new Error();
   } catch {
+    return NextResponse.json({ error: "Invalid URL" }, { status: 400 });
+  }
+
+  if (isPrivateHost(parsedUrl.hostname)) {
     return NextResponse.json({ error: "Invalid URL" }, { status: 400 });
   }
 
