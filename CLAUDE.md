@@ -40,6 +40,9 @@ All site content lives in `data/profile.js`. To update:
 - Glassmorphism cards: `background: rgba(10, 12, 28, 0.85)` + `border: 1px solid rgba(255,255,255,0.08)` + `backdrop-filter: blur`
 - Pill buttons use `.btn.ghost`; muted nav links use `.nav-link`
 
+## Rules
+- Never push to GitHub without explicit permission from the user.
+
 ## Deployment
 
 Pushes to `main` auto-deploy via Vercel. `jsdom` and `@mozilla/readability` are listed as `serverExternalPackages` in `next.config.ts` to avoid bundling issues on the edge.
