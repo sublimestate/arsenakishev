@@ -127,6 +127,15 @@ export const personalNotes = [
   'Balancing backend rigor with real-world product velocity is where I thrive.',
 ]
 
+export const projects = [
+  {
+    name: 'Article Reader',
+    description: 'A clean, distraction-free reader for any article URL. Bypasses paywalls via Googlebot UA and falls back to the Wayback Machine.',
+    stack: ['Next.js', 'Mozilla Readability', 'jsdom'],
+    href: '/reader',
+  },
+]
+
 export const articles = [
   {
     id: 'an-experiment-in-writing',
