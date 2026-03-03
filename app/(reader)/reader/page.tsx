@@ -6,12 +6,9 @@ import { useRouter } from 'next/navigation'
 export default function ReaderHome() {
   const router = useRouter()
   const [url, setUrl] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
 
-  async function handleSubmit(e: FormEvent) {
+  function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    setError('')
 
     let normalized = url.trim()
     if (!normalized) return
@@ -19,26 +16,7 @@ export default function ReaderHome() {
       normalized = 'https://' + normalized
     }
 
-    setLoading(true)
-    try {
-      const res = await fetch('/api/fetch-article', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: normalized }),
-      })
-
-      if (!res.ok) {
-        const data = await res.json()
-        setError(data.error ?? 'Failed to fetch article.')
-        return
-      }
-
-      router.push(`/reader/article?url=${encodeURIComponent(normalized)}`)
-    } catch {
-      setError('Network error. Please try again.')
-    } finally {
-      setLoading(false)
-    }
+    router.push(`/reader/article?url=${encodeURIComponent(normalized)}`)
   }
 
   return (
@@ -56,21 +34,16 @@ export default function ReaderHome() {
             onChange={(e) => setUrl(e.target.value)}
             placeholder="https://example.com/some-article"
             className="reader-input"
-            disabled={loading}
             autoFocus
           />
           <button
             type="submit"
-            disabled={loading || !url.trim()}
+            disabled={!url.trim()}
             className="reader-submit"
           >
-            {loading ? 'Fetching article…' : 'Read Article'}
+            Read Article
           </button>
         </form>
-
-        {error && (
-          <p className="reader-error">{error}</p>
-        )}
       </div>
     </main>
   )
