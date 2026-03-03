@@ -28,6 +28,9 @@ export default function Writing() {
                     })}
                   </span>
                 </div>
+                {article.summary && (
+                  <p className="article-summary">{article.summary}</p>
+                )}
               </article>
             </Link>
           ))}
