@@ -134,6 +134,12 @@ export const projects = [
     stack: ['Next.js', 'Mozilla Readability', 'jsdom'],
     href: '/reader',
   },
+  {
+    name: 'Political Career',
+    description: 'A political career simulator where players make strategic decisions before elections to secure victories and climb the political ladder.',
+    stack: ['Next.js', 'React', 'TypeScript', 'Claude', 'Vercel'],
+    href: 'https://political-game-nu.vercel.app/',
+  },
 ]
 
 export const articles = [
