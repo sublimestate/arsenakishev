@@ -1072,7 +1072,8 @@
   }
 
   .article-card,
-  .experience-card {
+  .experience-card,
+  .metric-grid li {
     backdrop-filter: none;
   }
 }
