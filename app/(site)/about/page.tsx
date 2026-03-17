@@ -1,12 +1,27 @@
+import Image from 'next/image'
 import { languagesList, education } from '@/data/profile'
 import WorldMap from '@/components/WorldMap'
+
+const profileBlur = 'data:image/jpeg;base64,/9j/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wAARCAAKAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQIEBf/EAB0QAAEEAgMAAAAAAAAAAAAAAAEAAgMRBCEUUZH/xAAUAQEAAAAAAAAAAAAAAAAAAAAB/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAERAv/aAAwDAQACEQMRAD8AeTLkErS0AEKjkvO6b6se9oWeyhOjpSH/2Q=='
+const daisyBlur = 'data:image/jpeg;base64,/9j/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wAARCAAKAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQIFBv/EACAQAAIBAgcBAAAAAAAAAAAAAAEDAAIRBAUUIiMxQVH/xAAUAQEAAAAAAAAAAAAAAAAAAAAB/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8ANLG4hgaK9hPnkrB6rDkEzeWk6Zwueolz9MC//9k='
+const barsikBlur = 'data:image/jpeg;base64,/9j/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAEF/8QAHRAAAQQCAwAAAAAAAAAAAAAAAQACAyEEETEycf/EABUBAQEAAAAAAAAAAAAAAAAAAAIE/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAEhEv/aAAwDAQACEQMRAD8ApjkMjw5miBSCX5gJ4WxAdi7Qndj6pttQbp//2Q=='
 
 export default function About() {
   return (
     <div className="page about-page">
       <section className="about-hero">
         <div className="about-photo-wrapper">
-          <img src="/arsen_photo.jpg" alt="Portrait of Arsen Akishev" className="about-photo" />
+          <Image
+            src="/arsen_photo.jpg"
+            alt="Portrait of Arsen Akishev"
+            width={756}
+            height={1008}
+            className="about-photo"
+            placeholder="blur"
+            blurDataURL={profileBlur}
+            sizes="(max-width: 720px) 100vw, 360px"
+            priority
+          />
         </div>
         <div className="about-copy">
           <p className="eyebrow">About me</p>
@@ -56,12 +71,30 @@ export default function About() {
         </div>
         <div className="pet-grid">
           <div className="pet-card">
-            <img src="/daisy_photo.jpg" alt="Daisy the dog" className="pet-photo" />
+            <Image
+              src="/daisy_photo.jpg"
+              alt="Daisy the dog"
+              width={200}
+              height={200}
+              className="pet-photo"
+              placeholder="blur"
+              blurDataURL={daisyBlur}
+              sizes="200px"
+            />
             <h3>Daisy</h3>
             <p className="pet-type">Dog</p>
           </div>
           <div className="pet-card">
-            <img src="/barsik_photo.jpg" alt="Barsik the cat" className="pet-photo" />
+            <Image
+              src="/barsik_photo.jpg"
+              alt="Barsik the cat"
+              width={200}
+              height={200}
+              className="pet-photo"
+              placeholder="blur"
+              blurDataURL={barsikBlur}
+              sizes="200px"
+            />
             <h3>Barsik</h3>
             <p className="pet-type">Cat</p>
           </div>

@@ -4,10 +4,10 @@ export default function Home() {
   return (
     <div className="page home-page">
       <header className="hero" id="home">
-        <p className="eyebrow">Arsen Akishev · Backend Software Engineer</p>
-        <h1>Engineering backend platforms with AWS, Node.js, and PostgreSQL.</h1>
-        <p className="lede">{summary}</p>
-        <ul className="metric-grid">
+        <p className="eyebrow fade-up fade-up-1">Arsen Akishev · Backend Software Engineer</p>
+        <h1 className="fade-up fade-up-2">Engineering backend platforms with AWS, Node.js, and PostgreSQL.</h1>
+        <p className="lede fade-up fade-up-3">{summary}</p>
+        <ul className="metric-grid fade-up fade-up-4">
           {quickFacts.map((metric) => (
             <li key={metric.label}>
               <span className="metric-value">{metric.value}</span>
