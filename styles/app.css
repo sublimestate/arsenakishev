@@ -975,6 +975,37 @@
   max-width: 400px;
 }
 
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.skel {
+  border-radius: 0.5rem;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 75%
+  );
+  background-size: 400px 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.skel-card {
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  background: rgba(10, 12, 28, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skel {
+    animation: none;
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
 @media (max-width: 720px) {
   .article-header {
     flex-direction: column;
