@@ -26,9 +26,9 @@ export default function About() {
         <div className="about-copy">
           <p className="eyebrow">About me</p>
           <h1>{'Born in Kyrgyzstan and raised in NYC.'}</h1>
-          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn ghost">
+          {/* <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn ghost">
             View Resume
-          </a>
+          </a> */}{/* temporarily hidden */}
         </div>
       </section>
 

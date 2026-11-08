@@ -7,7 +7,7 @@ import { useState, useEffect, useRef } from 'react'
 const navLinks = [
   { path: '/', label: 'Home' },
   { path: '/about', label: 'About' },
-  { path: '/experience', label: 'Experience' },
+  // { path: '/experience', label: 'Experience' }, // temporarily hidden
   { path: '/writing', label: 'Writing' },
   { path: '/projects', label: 'Projects' },
 ]
