@@ -140,24 +140,11 @@
       footer p{color:var(--ink-soft);font-size:1.02rem;font-style:italic;margin:14px 0 0}
       footer .credit{font-family:"Jost",sans-serif;font-style:normal;font-size:.72rem;letter-spacing:.04em;color:var(--ink-faint);margin-top:26px}
       footer .credit a{color:inherit}
-      .rsvp-card{max-width:660px;margin:44px auto 0;background:var(--surface);border:1px solid var(--line-light);padding:10px;text-align:left}
-      .rsvp-inner{border:1px solid var(--line);padding:44px 40px 40px}
+      .rsvp-card{max-width:660px;margin:44px auto 0;background:var(--surface);border:1px solid var(--line-light);padding:10px;text-align:center}
+      .rsvp-inner{border:1px solid var(--line);padding:48px 40px 46px}
       .rsvp-deadline{text-align:center;font-style:italic;color:var(--gold-dark);font-size:1.3rem;margin:0}
-      .rsvp-form{margin-top:30px}
-      .field{margin-bottom:24px}
-      .field label,.field legend{display:block;font-family:"Jost",sans-serif;font-size:.66rem;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-dark);margin:0 0 8px;padding:0}
-      .field fieldset{border:0;margin:0;padding:0}
-      .field input[type="text"],.field select,.field textarea{width:100%;font-family:"Cormorant Garamond",Georgia,serif;font-size:1.15rem;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:8px 2px;outline:none}
-      .field input[type="text"]:focus,.field select:focus,.field textarea:focus{border-bottom-color:var(--gold)}
-      .field textarea{resize:vertical;min-height:64px;line-height:1.5}
-      .field-row{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-      .attend{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-      .attend label{display:flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--line);padding:14px 10px 13px;cursor:pointer;font-family:"Jost",sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);margin:0;text-align:center}
-      .attend label:has(input:checked){border-color:var(--gold);color:var(--gold-dark);background:rgba(176,141,87,.07)}
-      .attend input{accent-color:var(--gold-dark);width:16px;height:16px;margin:0;flex:0 0 16px}
-      .rsvp-submit{width:100%;margin-top:6px}
-      .rsvp-note{text-align:center;color:var(--ink-faint);font-style:italic;font-size:1.02rem;margin:16px 0 0}
-      .rsvp-status{text-align:center;color:var(--gold-dark);font-size:1.08rem;margin:14px 0 0;min-height:1.4em}
+      .rsvp-text{color:var(--ink-soft);font-size:1.15rem;line-height:1.7;max-width:440px;margin:0 auto}
+      .rsvp-btn{margin-top:30px}
       @media (max-width:720px){
         .topbar-inner{padding:12px 16px}
         .topnav{gap:16px}
@@ -178,9 +165,7 @@
         .t-body{padding-left:12px}
         .countdown{max-width:100%}
         .cd b{font-size:1.9rem}
-        .rsvp-inner{padding:34px 20px 30px}
-        .field-row{grid-template-columns:1fr;gap:0}
-        .attend{grid-template-columns:1fr}
+        .rsvp-inner{padding:38px 20px 36px}
       }
     </style>
   </head>
@@ -309,7 +294,7 @@
           <details><summary>What time should I arrive?</summary><p>Cocktail hour starts at 6:00 PM — come then, grab a drink and some hors d&rsquo;oeuvres, and settle in. The reception and dinner begin at 7:00 PM.</p></details>
           <details><summary>What&rsquo;s for dinner and drinks?</summary><p>A buffet dinner, a champagne toast, wedding cake and sweets, and a top-shelf open bar through the evening — all hosted by us. Just bring your appetite and your dancing shoes.</p></details>
           <details><summary>Can I bring a plus-one or the kids?</summary><p>Your formal invitation will name everyone included in your party. If you&rsquo;re unsure, reach out to Arsen or Aidai and we&rsquo;ll sort it out.</p></details>
-          <details><summary>How do I RSVP?</summary><p>Please reply using the <a href="#rsvp">RSVP form</a> on this page by Monday, December 7, 2026. If anything changes after that, just reach out to Arsen or Aidai directly.</p></details>
+          <details><summary>How do I RSVP?</summary><p>Please fill out our <a href="https://docs.google.com/forms/d/e/1FAIpQLScdeSWVpMy-YIZ0hUq1SWVpv8V5EzuIXi2KOdrQfshyxpz68g/viewform" target="_blank" rel="noopener">RSVP form</a> by Monday, December 7, 2026. If anything changes after that, just reach out to Arsen or Aidai directly.</p></details>
           <details><summary>Is there a registry?</summary><p>Your presence really is the present. Registry details will be added here once they&rsquo;re set up.</p></details>
         </div>
       </div>
@@ -322,43 +307,8 @@
         <div class="flourish" aria-hidden="true"><svg viewBox="0 0 34 18" fill="none" stroke="currentColor" stroke-width="1"><path d="M17 2 C20 6, 20 12, 17 16 C14 12, 14 6, 17 2 Z"/><path d="M4 9 C7 6, 10 6, 12 9 C10 12, 7 12, 4 9 Z M22 9 C25 6, 28 6, 30 9 C28 12, 25 12, 22 9 Z"/></svg></div>
         <p class="rsvp-deadline">Please respond by Monday, December 7, 2026</p>
         <div class="rsvp-card"><div class="rsvp-inner">
-          <form class="rsvp-form" id="rsvp-form" novalidate>
-            <div class="field">
-              <label for="rsvp-name">Your name</label>
-              <input type="text" id="rsvp-name" name="name" autocomplete="name" placeholder="Full name" />
-            </div>
-            <div class="field">
-              <fieldset>
-                <legend>Will you join us?</legend>
-                <div class="attend">
-                  <label><input type="radio" name="attending" value="Joyfully accepts" /> Joyfully accepts</label>
-                  <label><input type="radio" name="attending" value="Regretfully declines" /> Regretfully declines</label>
-                </div>
-              </fieldset>
-            </div>
-            <div class="field-row">
-              <div class="field">
-                <label for="rsvp-guests">Number of guests</label>
-                <select id="rsvp-guests" name="guests">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="rsvp-dietary">Dietary needs</label>
-                <input type="text" id="rsvp-dietary" name="dietary" placeholder="Allergies, vegetarian, etc." />
-              </div>
-            </div>
-            <div class="field">
-              <label for="rsvp-message">A note for Arsen &amp; Aidai <span style="letter-spacing:.04em;text-transform:none">(optional)</span></label>
-              <textarea id="rsvp-message" name="message" rows="3" placeholder="Song requests welcome"></textarea>
-            </div>
-            <button class="btn btn-dark rsvp-submit" type="submit">Send RSVP by Email</button>
-            <p class="rsvp-status" id="rsvp-status" role="status" aria-live="polite"></p>
-            <p class="rsvp-note">This opens your email app with your reply filled in — just press send.</p>
-          </form>
+          <p class="rsvp-text">Let us know if you can join us — it takes just a minute. Tell us who&rsquo;s coming, how many guests, and any dietary needs, all in one short form.</p>
+          <a class="btn btn-dark rsvp-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScdeSWVpMy-YIZ0hUq1SWVpv8V5EzuIXi2KOdrQfshyxpz68g/viewform" target="_blank" rel="noopener">RSVP on Google Forms</a>
         </div></div>
       </div>
     </section>
@@ -405,27 +355,6 @@
           var blob = new Blob([ics], { type: 'text/calendar' });
           var url = URL.createObjectURL(blob);
           var a = document.createElement('a'); a.href = url; a.download = 'arsen-and-aidai-wedding.ics'; document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
-        });
-        document.getElementById('rsvp-form').addEventListener('submit', function (e) {
-          e.preventDefault();
-          var status = document.getElementById('rsvp-status');
-          var name = document.getElementById('rsvp-name').value.trim();
-          var attendingEl = document.querySelector('input[name="attending"]:checked');
-          if (!name) { status.textContent = 'Please add your name so we know who is replying.'; document.getElementById('rsvp-name').focus(); return; }
-          if (!attendingEl) { status.textContent = 'Please tell us whether you can join us.'; return; }
-          var attending = attendingEl.value;
-          var lines = ['Name: ' + name, 'Reply: ' + attending];
-          if (attending === 'Joyfully accepts') {
-            lines.push('Number of guests: ' + document.getElementById('rsvp-guests').value);
-            var dietary = document.getElementById('rsvp-dietary').value.trim();
-            if (dietary) lines.push('Dietary needs: ' + dietary);
-          }
-          var message = document.getElementById('rsvp-message').value.trim();
-          if (message) lines.push('Note: ' + message);
-          var subject = 'RSVP — ' + name + ' (' + attending + ')';
-          var href = 'mailto:arsenakishev@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
-          var link = document.createElement('a'); link.href = href; document.body.appendChild(link); link.click(); document.body.removeChild(link);
-          status.textContent = 'Your email app should open with your RSVP ready — just press send. Thank you!';
         });
       })();
     </script>
