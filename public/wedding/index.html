@@ -99,18 +99,6 @@
       .fact h3{margin:0 0 10px;font-family:"Jost",sans-serif;font-size:.66rem;font-weight:500;letter-spacing:.30em;text-transform:uppercase;color:var(--gold)}
       .fact p{margin:0;font-family:"Cormorant Garamond",Georgia,serif;font-size:1.45rem;font-weight:500;line-height:1.25;color:var(--ink)}
       .fact p small{display:block;font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:1rem;font-weight:400;color:var(--ink-soft);margin-top:6px}
-      .timeline{max-width:560px;margin:52px auto 0}
-      .t-row{display:grid;grid-template-columns:1fr 28px 1fr;padding:0}
-      .t-time{text-align:right;padding:18px 18px 26px 0;font-family:"Cormorant Garamond",Georgia,serif;font-size:1.85rem;font-weight:400;color:var(--ink);line-height:1.1}
-      .t-time small{font-size:.62em;color:var(--ink-soft)}
-      .t-mid{position:relative;display:flex;justify-content:center}
-      .t-mid::before{content:"";position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
-      .t-row:first-child .t-mid::before{top:28px}
-      .t-row:last-child .t-mid::before{bottom:auto;height:28px}
-      .t-dot{width:11px;height:11px;border-radius:50%;margin-top:28px;flex:0 0 11px;background:var(--bg);border:1px solid var(--gold);z-index:1}
-      .t-body{padding:20px 0 26px 18px}
-      .t-body h3{margin:0 0 4px;font-family:"Cormorant Garamond",Georgia,serif;font-size:1.4rem;font-weight:500;color:var(--ink);line-height:1.2}
-      .t-body p{margin:0;color:var(--ink-soft);font-family:"Jost",sans-serif;font-weight:300;font-size:.88rem;line-height:1.6}
       .venue{display:grid;grid-template-columns:1.05fr 1fr;gap:44px;margin-top:48px;align-items:center}
       .venue-frame{background:#fff;padding:10px;border:1px solid var(--line-light);box-shadow:0 10px 34px rgba(62,56,46,.06)}
       .venue-frame .frame-inner{border:1px solid var(--line-light);padding:6px}
@@ -168,8 +156,6 @@
         .section{padding:60px 18px}
         .band-wrap{padding:60px 16px}
         .band-inner{padding:40px 20px 36px}
-        .t-time{font-size:1.45rem;padding-right:12px}
-        .t-body{padding-left:12px}
         .countdown{max-width:100%}
         .cd b{font-size:1.9rem}
         .rsvp-inner{padding:38px 20px 36px}
@@ -287,12 +273,12 @@
         var I18N = {
           ru: {
             title: 'Арсен и Айдай — 18 декабря 2026',
-            navLabel: 'Разделы страницы', navSchedule: 'Программа',
+            navLabel: 'Разделы страницы',
             heroDate: 'Пятница · 18 · 12 · 2026', groomName: 'Арсен Акишев', brideName: 'Айдай Бакасова',
             heroSub: 'Вместе с нашими семьями приглашаем вас отпраздновать нашу свадьбу — вечер с ужином, тостами и танцами.',
             cdLabel: 'Обратный отсчёт до торжества', cdDays: 'Дней', cdHours: 'Часов', cdMins: 'Минут', cdSecs: 'Секунд',
             cdNote: 'до начала торжества', cdDone: 'Этот день настал — увидимся в The Buck Hotel!',
-            seeEvening: 'Программа вечера', directions: 'Как добраться',
+            directions: 'Как добраться',
             heroAlt: 'Банкетный зал The Buck Hotel: круглые столы, золотые стулья, высокие белые цветочные композиции и хрустальные люстры',
             inviteLabel: 'Приглашение', inviteKicker: 'Как всё началось', inviteH2: 'Вы <em>приглашены</em>',
             inviteBig: 'Мы женимся — и будем очень рады, если вы будете с нами в этот день.',
@@ -301,11 +287,6 @@
             factDateH: 'Дата', factDate: 'Пятница, 18 декабря 2026', factDateSub: 'Не забудьте дату',
             factTimeH: 'Время', factTime: '18:00 – 23:00', factTimeSub: 'Коктейли в 18:00, приём в 19:00',
             factPlaceH: 'Место',
-            scheduleLabel: 'Программа', schedKicker: 'Торжество', schedH2: 'Программа <em>дня</em>',
-            schedLede: 'Одно место, один зал, весь вечер — не нужно никуда переезжать. Просто приходите, располагайтесь и празднуйте вместе с нами.',
-            t1H: 'Коктейльный час', t1P: 'Двери открываются. Закуски, напитки из открытого бара и время найти свой столик и поздороваться со всеми.',
-            t2H: 'Начало приёма', t2P: 'Поднимем бокалы шампанского за тост, затем подадут ужин — буфет, где каждый найдёт что-то по вкусу. После ужина — свадебный торт, сладости и танцы.',
-            t3H: 'Последний танец', t3P: 'Вечер завершается в одиннадцать. Спасибо, что провели его с нами.',
             rsvpKicker: 'Пожалуйста, ответьте', rsvpH2: 'Просим <em>ответить</em>',
             rsvpDeadline: 'Пожалуйста, ответьте до понедельника, 7 декабря 2026 года',
             rsvpText: 'Дайте нам знать, сможете ли вы прийти, — это займёт всего минуту. Укажите, кто придёт и сколько будет гостей, в одной короткой форме.',
@@ -322,12 +303,12 @@
           },
           en: {
             title: 'Arsen & Aidai — December 18, 2026',
-            navLabel: 'Page sections', navSchedule: 'Schedule',
+            navLabel: 'Page sections',
             heroDate: 'Friday · 18 · 12 · 2026', groomName: 'Arsen Akishev', brideName: 'Aidai Bakasova',
             heroSub: 'Together with our families, we invite you to celebrate our wedding — an evening of dinner, toasts, and dancing.',
             cdLabel: 'Countdown to the celebration', cdDays: 'Days', cdHours: 'Hours', cdMins: 'Minutes', cdSecs: 'Seconds',
             cdNote: 'until the celebration begins', cdDone: 'Today is the day — see you at The Buck Hotel!',
-            seeEvening: 'See the Evening', directions: 'Get Directions',
+            directions: 'Get Directions',
             heroAlt: 'The ballroom at The Buck Hotel, set with round tables, gold chairs, tall white floral centerpieces and crystal chandeliers',
             inviteLabel: 'Invitation', inviteKicker: 'How It Began', inviteH2: 'You’re <em>invited</em>',
             inviteBig: 'We’re getting married — and we’d love for you to be there when we celebrate.',
@@ -336,11 +317,6 @@
             factDateH: 'The Date', factDate: 'Friday, Dec 18, 2026', factDateSub: 'Save the date',
             factTimeH: 'The Time', factTime: '6:00 – 11:00 PM', factTimeSub: 'Cocktails at 6, reception at 7',
             factPlaceH: 'The Place',
-            scheduleLabel: 'Schedule', schedKicker: 'The Celebration', schedH2: 'Order of <em>the day</em>',
-            schedLede: 'One venue, one room, the whole night — no shuttling between places. Just arrive, settle in, and celebrate with us.',
-            t1H: 'Cocktail Hour', t1P: 'Doors open. Appetizers, drinks from the open bar, and time to find your table and say hello.',
-            t2H: 'The Reception Begins', t2P: 'We’ll raise a champagne toast, then dinner is served — a buffet with something for everyone. After dinner comes wedding cake, sweets, and dancing.',
-            t3H: 'Last Dance', t3P: 'The evening wraps up at eleven. Thank you for spending it with us.',
             rsvpKicker: 'Please Reply', rsvpH2: 'Kindly <em>reply</em>',
             rsvpDeadline: 'Please respond by Monday, December 7, 2026',
             rsvpText: 'Let us know if you can join us — it takes just a minute. Tell us who’s coming and how many guests, all in one short form.',
